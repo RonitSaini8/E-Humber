@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +33,14 @@ public class ProductService {
             throw new IllegalStateException("A product with this name already exists !");
         }
         productRepository.save(product);
+    }
+
+    public int saveProduct(Product product) {
+        if (product.getName().isEmpty() || product.getPrice() < 0) {
+            return 0;
+        }
+        productRepository.save(product);
+        return 1;
     }
 
     public void updateProduct(int productId, Product product) {
