@@ -5,18 +5,21 @@ import com.humber.EHumber.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/shop")
 public class ProductController {
-    @Value("EHumber")
+    @Value("${shop.name}")
     private String shopName;
 
-    @Value("5")
+    @Value("${page.size}")
     private int pageSize;
 
     @Autowired
@@ -57,5 +60,51 @@ public class ProductController {
 
         model.addAttribute("message", message);
         return "products";
+    }
+
+    @GetMapping("/products/add")
+    public String addProduct(Model model, @RequestParam(required = false) String message) {
+        model.addAttribute("product", new Product());
+        model.addAttribute("message", message);
+        return "add";
+    }
+
+    @PostMapping("/products/add")
+    public String saveProduct(Model model, @ModelAttribute Product product) {
+        int statusCode = productService.saveProduct(product);
+
+        if (statusCode == 0) {
+            model.addAttribute("message", "Product not added ! Missing name or price !");
+            return "add";
+        }
+        return "redirect:/shop/products/1?message=Product saved successfully !";
+    }
+
+    @GetMapping("products/update/{id}")
+    public String updateProduct(Model model, @PathVariable int id) {
+        Optional<Product> productToUpdate = Optional.ofNullable(productService.getProductById(id));
+
+        if (productToUpdate.isPresent()) {
+            model.addAttribute("product", productToUpdate.get());
+            return "add";
+        }
+        return "redirect:/shop/products/1?message=Product to be updated not found !";
+    }
+
+    @PostMapping("products/update/{id}")
+    public String updateProduct(@ModelAttribute Product product) {
+        System.out.println(product.toString());
+        productService.updateProduct(product.getId(), product);
+        return "redirect:/shop/products/1?message=Product updated successfully !";
+    }
+
+    @DeleteMapping("products/delete/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable int id) {
+        try {
+            productService.deleteProduct(id);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+        return ResponseEntity.ok("Product deleted successfully !");
     }
 }
