@@ -1,0 +1,43 @@
+body {
+    display: flex;
+    min-height: 100vh;
+}
+
+.navbar {
+    width: 250px;
+    height: 100vh;
+    background-color: #343a40;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    align-items: flex-start;
+}
+
+.nav-item {
+    padding: 15px;
+    text-align: left;
+}
+
+.nav-item a {
+    color: white;
+    display: block;
+    text-align: left;
+}
+
+.nav-item a:hover {
+    background-color: #007bff;
+    border-radius: 4px;
+}
+
+.container {
+    margin-left: 260px;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
