@@ -1,7 +1,8 @@
-body {
+.body {
     display: flex;
     height: 100vh;
     margin: 0;
+    background-color: whitesmoke;
 }
 
 .navbar-title {
@@ -62,6 +63,7 @@ body {
     border: 2px solid black;
     border-radius: 10px;
     background-color: indianred;
+    color: white;
 }
 
 .homeButton {
