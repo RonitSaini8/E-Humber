@@ -1,5 +1,6 @@
-<nav class="navbar navbar-expand-lg">
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+<nav class="navbar">
+    <div>
+        <h1 class="navbar-title"><span th:text = "${shopName}"></span></h1>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" th:href = "@{/shop/home}">Home</a>
@@ -8,7 +9,11 @@
                 <a class="nav-link" th:href="@{/shop/products/1}">Products</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/shop/add}">Add</a>
+                <a class="nav-link" th:href="@{/shop/products/add}">Add</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">Logout</a>
+            </li>
         </ul>
     </div>
 </nav>
