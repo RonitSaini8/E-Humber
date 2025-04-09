@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: salmon;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .main {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: red;
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-left: 100px;
+            padding-right: 100px;
+        }
+
+        input[type="text"],
+        input[type="password"]
+        {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            background-color: red;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: darkred;
+        }
+
+        input[type="submit"]:active {
+            background-color: salmon;
+        }
+
+        a {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+    </style>
+</head>
+<body>
+<div class="main">
+    <h1>Log In To <span id = "shopName" th:text = "${shopName}"></span></h1>
+    <div class="alert alert-info" role="alert" th:if="${message}">
+        <span th:text="${message}"></span>
+    </div>
+    <div th:if="${param.error}" class="alert alert-danger">
+        Username or password incorrect!
+    </div>
+    <div th:if="${param.logout}" class="alert alert-warning">
+        Logged out.
+    </div>
+    <form th:action="@{/login}" method="post">
+        <div>
+            <input type="text" name="username" placeholder="Username"/>
+        </div>
+        <div>
+            <input type="password" name="password" placeholder="Password"/>
+        </div>
+        <input type="submit" value="Log in"/>
+        <a th:href="@{/register}" class = "btn btn-primary">Register</a>
+    </form>
+</div>
+</body>
+</html>
